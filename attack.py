@@ -33,9 +33,12 @@ if __name__ == '__main__':
     
     pattern = r'/a/notifications.php\?poke\=.*?(?=\")'
     regex = re.compile(pattern)
+    
+    counter = 0
    
     while 1 == 1:
         print("Looping...")
+        changing = 0
         usock = opener.open('http://m.facebook.com/pokes')
         PokingData = (usock.read())
         usock.close()
@@ -44,6 +47,14 @@ if __name__ == '__main__':
             url = match.group(0)
     	    redpill = (url).replace('&amp;', '&')
             print "POKE! %s: %s" % (match.start(), 'https://m.facebook.com' + redpill)
+            counter += 1
+            print(counter)
+            changing += 1
             usock = opener.open("http://m.facebook.com"+redpill)
             usock.close()
-        time.sleep(5)
+    	if changing == 0:
+    		print "Waiting 2 minutes."
+        	time.sleep(120)
+    	else: 
+    		print "Waiting 5 seconds."
+        	time.sleep(5)
