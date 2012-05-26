@@ -39,9 +39,12 @@ if __name__ == '__main__':
     while 1 == 1:
         print("Looping...")
         changing = 0
-        usock = opener.open('http://m.facebook.com/pokes')
-        PokingData = (usock.read())
-        usock.close()
+        try:
+        	usock = opener.open('http://m.facebook.com/pokes')
+        	PokingData = (usock.read())
+        	usock.close()
+        except urllib2.HTTPError, error:
+        	print "There was an error :'( BUT WE SHALL RECOVER!"
 
         for match in regex.finditer(PokingData):
             url = match.group(0)
@@ -50,8 +53,11 @@ if __name__ == '__main__':
             counter += 1
             print(counter)
             changing += 1
-            usock = opener.open("http://m.facebook.com"+redpill)
-            usock.close()
+            try:
+            	usock = opener.open("http://m.facebook.com"+redpill)
+            	usock.close()
+            except urllib2.HTTPError, error:
+            	print "There was an error :'( BUT WE SHALL RECOVER!"
     	if changing == 0:
     		print "Waiting 2 minutes."
         	time.sleep(120)
